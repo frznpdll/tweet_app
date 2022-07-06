@@ -1,6 +1,29 @@
 <x-layout title="つぶやき表示">
     <x-header>
-        <x-elements.show-button>ml-auto</x-elements.show-button>
+        @auth
+            <form action="{{ route('logout') }}" method="post" class="ml-auto my-auto">
+                @csrf
+                <button type="submit" class="btn btn-danger btn-lg">
+                    ログアウト
+                </button>
+            </form>
+            <x-elements.show-button>ml-3</x-elements.show-button>
+        @endauth
+        @guest
+            <form action="{{ route('login') }}" method="get" class="ml-auto my-auto">
+                @csrf
+                <button type="submit" class="btn btn-primary btn-lg">
+                    ログイン
+                </button>
+            </form>
+            <form action="{{ route('register') }}" method="post" class="ml-3 my-auto">
+                @csrf
+                <button type="submit" class="btn btn-warning btn-lg">
+                    会員登録
+                </button>
+            </form>
+            <x-elements.show-button>ml-3</x-elements.show-button>
+        @endguest
     </x-header>
     <div class="border bg-light d-inline-block px-3 mt-3">{{ $tweet->user->name }}</div>
     <section class="p-3 border bg-light d-flex">

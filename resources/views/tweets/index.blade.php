@@ -2,13 +2,34 @@
 
     <x-header>
         @auth
-        <form action="{{ route('tweets.add') }}" method="get" class="ml-auto my-auto">
+            <form action="{{ route('logout') }}" method="get" class="ml-auto my-auto">
+                @csrf
+                <button type="submit" class="btn btn-danger btn-lg">
+                    ログアウト
+                </button>
+            </form>
+            <form action="{{ route('tweets.add') }}" method="get" class="ml-3 my-auto">
+                @csrf
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <span class="fui-plus"></span>
+                </button>
+            </form>
+        @endauth
+
+        @guest
+        <form action="{{ route('login') }}" method="get" class="ml-auto my-auto">
             @csrf
             <button type="submit" class="btn btn-primary btn-lg">
-                <span class="fui-plus"></span>
+                ログイン
             </button>
         </form>
-        @endauth
+        <form action="{{ route('register') }}" method="get" class="ml-3 my-auto">
+            @csrf
+            <button type="submit" class="btn btn-warning btn-lg">
+                会員登録
+            </button>
+        </form>
+        @endguest
     </x-header>
 
     @forelse ($tweets as $tweet)
