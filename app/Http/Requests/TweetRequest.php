@@ -35,4 +35,9 @@ class TweetRequest extends FormRequest
             'content.max' => '150文字以内でお願いします',
         ];
     }
+
+    public function userId(): int
+    {
+        return $this->user()->id;
+    }
 }

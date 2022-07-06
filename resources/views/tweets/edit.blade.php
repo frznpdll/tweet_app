@@ -1,5 +1,7 @@
 <x-layout title="つぶやき編集">
-    <x-header></x-header>
+    <x-header>
+        {{-- <x-show-button></x-show-button> --}}
+    </x-header>
     <form action="{{ route('tweets.update', $tweet) }}" method="post" class="ml-auto d-flex">
         @method('PATCH')
         @csrf
