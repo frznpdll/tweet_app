@@ -39,7 +39,7 @@ class TweetController extends Controller
             ->with('tweet', $tweet);
     }
 
-    public function edit(TweetRequest $request, Tweet $tweet, TweetService $tweetService) {
+    public function edit(Request $request, Tweet $tweet, TweetService $tweetService) {
 
         if (!$tweetService->checkOwnTweet($request->user()->id, $tweet->user_id)) {
             throw new AccessDeniedHttpException();
@@ -59,7 +59,7 @@ class TweetController extends Controller
             ->route('tweets.show', $tweet);
     }
 
-    public function delete(TweetRequest $request, Tweet $tweet, TweetService $tweetService) {
+    public function delete(Request $request, Tweet $tweet, TweetService $tweetService) {
 
         if (!$tweetService->checkOwnTweet($request->user()->id, $tweet->user_id)) {
             throw new AccessDeniedHttpException();
