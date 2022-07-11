@@ -14,7 +14,7 @@
         {{ $slot }}
     </div>
 
-<script src="https://unpkg.com/popper.js@1.14.1/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+{{-- <script src="https://unpkg.com/popper.js@1.14.1/dist/umd/popper.min.js" crossorigin="anonymous"></script> --}}
 
 <script src="http://vjs.zencdn.net/6.6.3/video.js"></script>
 

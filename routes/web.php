@@ -42,6 +42,9 @@ Route::middleware('auth')->group(function () {
         ->name('tweets.delete')->where('tweet', '[0-9]+');
 });
 
+Route::get('/tweets/search', [TweetController::class, 'search'])
+    ->name('tweets.search');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

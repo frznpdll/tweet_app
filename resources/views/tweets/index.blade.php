@@ -32,6 +32,18 @@
         @endguest
     </x-header>
 
+    <section class="mb-3">
+        <form action="{{ route('tweets.search') }}" method="get" class="d-flex">
+            @csrf
+            <input type="text" name='keyword' class="form-control mr-3" id="text" placeholder="キーワード">
+            <input type="submit" class="btn btn-primary" value="検索">
+        </form>
+        @error('keyword')
+                <div class="m-1 text-danger font-weight-bold">{{ $message }}</div>
+        @enderror
+    </section>
+
+
     @forelse ($tweets as $tweet)
         <x-elements.post>
             <x-slot name="acount">{{ $tweet->user->name }}</x-slot>
@@ -45,4 +57,5 @@
     @empty
         <a>つぶやきがありません</a>
     @endforelse
+
 </x-layout>

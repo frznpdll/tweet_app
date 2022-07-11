@@ -5,7 +5,7 @@
     <section class="mb-3">
         <form action="{{ route('tweets.create') }}" method="get" class="d-flex">
             @csrf
-            <textarea name="content" id="" class="form-control mr-3 input-lg" rows="3"></textarea>
+            <textarea name="content" class="form-control mr-3 input-lg" id="text" rows="3"></textarea>
             <input type="submit" class="btn btn-primary btn-lg ml-auto mt-auto" value="つぶやく">
         </form>
         @error('content')
