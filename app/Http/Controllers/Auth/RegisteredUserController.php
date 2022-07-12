@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Mail\NewUserIntroduction;
+use Illuminate\Contracts\Mail\Mailer;
+
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -31,23 +34,32 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request)
+    public function store(Request $request, Mailer $mailer)
     {
+        $allUser = User::get();
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $user = User::create([
+        $newUser = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
-        event(new Registered($user));
+        event(new Registered($newUser));
 
-        Auth::login($user);
+        Auth::login($newUser);
+
+        //メールの送信処理を追加
+
+        foreach ($allUser as $user) {
+            $mailer->to($user->email)
+                ->send(new NewUserIntroduction($user, $newUser));
+        }
 
         return redirect(RouteServiceProvider::HOME);
     }
