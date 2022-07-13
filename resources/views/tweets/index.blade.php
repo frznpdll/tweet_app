@@ -43,11 +43,8 @@
         @enderror
     </section>
 
-
     @forelse ($tweets as $tweet)
-        <x-elements.post>
-            <x-slot name="acount">{{ $tweet->user->name }}</x-slot>
-            <x-slot name="tweet">{{ $tweet->content }}</x-slot>
+        <x-elements.post :name="$tweet->user->name" :tweet="$tweet->content" :images="$tweet->images">
             <form action="{{ route('tweets.show', $tweet) }}" method="get" class="ml-auto">
                 @csrf
                 <button class="btn btn-info"><span class="fui-export"></span></button>

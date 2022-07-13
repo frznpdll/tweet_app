@@ -26,7 +26,7 @@ Route::get('/tweets/{tweet}', [TweetController::class, 'show'])
 
 Route::middleware('auth')->group(function () {
 
-    Route::get('/tweets/create', [TweetController::class, 'create'])
+    Route::post('/tweets/create', [TweetController::class, 'create'])
         ->name('tweets.create');
 
     Route::get('/tweets/add', [TweetController::class, 'add'])

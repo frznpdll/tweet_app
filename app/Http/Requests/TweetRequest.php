@@ -25,6 +25,8 @@ class TweetRequest extends FormRequest
     {
         return [
             'content' => 'required | max:150',
+            'images' => 'array|max:4',
+            'images.*' => 'required|image|mimes:png,jpg:jpeg,png,gif|max:2048'
         ];
     }
 
@@ -39,5 +41,10 @@ class TweetRequest extends FormRequest
     public function userId(): int
     {
         return $this->user()->id;
+    }
+
+    public function images(): array
+    {
+        return $this->file('images');
     }
 }

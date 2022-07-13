@@ -13,9 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('tweets', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id')->after('id');
-            $table->foreign('user_id')->references('id')->on('users');
+        Schema::create('tweet_images', function (Blueprint $table) {
+            $table->foreignId('tweet_id')
+                ->constrained('tweets')
+                ->cascadeOnDelete();
+            $table->foreignId('image_id')
+                ->constrained('images')
+                ->cascadeOnDelete();
+            $table->timestamps();
         });
     }
 
@@ -26,9 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('tweets', function (Blueprint $table) {
-            $table->dropForeign('tweets_user_add_id_foreign');
-            $table->dropColumn('user_id');
-        });
+        Schema::dropIfExists('tweet_images');
     }
 };

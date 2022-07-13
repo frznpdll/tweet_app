@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href={{ asset("css/vendor/bootstrap.min.css") }} rel="stylesheet">
     <link href={{ asset("css/flat-ui.css") }} rel="stylesheet">
+    <link href={{ asset("css/style.css") }} rel="stylesheet">
     <title>{{ $title }}</title>
 </head>
 <body>

@@ -13,20 +13,27 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class TweetController extends Controller
 {
-    public function index() {
+    public function index(TweetService $tweetService) {
 
-        $tweets = Tweet::latest()->get();
+        // $tweets = Tweet::latest()->get();
+        $tweets = $tweetService->getTweets();
+
+        // dump($tweets);
+        // app(\App\Exceptions\Handler::class)->render(request(), throw new \Error('dump report.'));
 
         return view('tweets.index')
             ->with('tweets', $tweets);
 
     }
 
-    public function create(TweetRequest $request, Tweet $tweet) {
+    public function create(TweetRequest $request, TweetService $tweetService) {
 
-        $tweet->content = $request->content;
-        $tweet->user_id = $request->userId();
-        $tweet->save();
+        $tweetService->saveTweet(
+            $request->userId(),
+            $request->content,
+            $request->images()
+        );
+
         return redirect()
             ->route('tweets.index');
     }
@@ -61,12 +68,13 @@ class TweetController extends Controller
             ->route('tweets.show', $tweet);
     }
 
-    public function delete(Request $request, Tweet $tweet, TweetService $tweetService) {
+    public function delete(Request $request, TweetService $tweetService) {
 
-        if (!$tweetService->checkOwnTweet($request->user()->id, $tweet->id)) {
+        $tweetId = (int) $request->route('tweet');
+        if (!$tweetService->checkOwnTweet($request->user()->id, $tweetId)) {
             throw new AccessDeniedHttpException();
         }
-        $tweet->delete();
+        $tweetService->deleteTweet($tweetId);
         return redirect()
             ->route('tweets.index');
     }
